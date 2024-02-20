@@ -47,8 +47,7 @@ function getSelectedSeat(): string[] {
 
 function setSelectedSeats() {
   let S_seats = getSelectedSeat();
-  // document.querySelector<HTMLDivElement>('#selectedSeats')!.innerHTML = `No seat selected yet!!`
-  if (cntOfSeat) {
+   if (cntOfSeat) {
     let inrTxt = `<table>
     <tr>
       <th class="th">Seat</th>
@@ -76,7 +75,6 @@ for (let i = 0; i < 40; i += 4) {
            <button id=${seats[i + 3]}>${seats[i + 3]}</button>`;
 }
 
-// <-- <div id="counter"> ${cntOfSeat} seats are selected </div> -->
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <h1>Ticket Booking System</h1>
@@ -107,16 +105,15 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
 
 
-function seatSelection(e:any) {
-  let x = e.target;
-  if (x != null) console.log(x.id);
-  let idx = seats.findIndex(e => (x.id === e));
+function seatSelection(btn:HTMLButtonElement) {
+  let x = btn.id;
+  console.log(btn.style);
+  let idx = seats.findIndex(e => (x === e));
   if (selectedSeat[idx]) {
     selectedSeat[idx] = Math.abs(1 - selectedSeat[idx])
-    e.target.style.backgroundColor = '#1a1a1a';
+    btn.style.backgroundColor = '#1a1a1a';
     cntOfSeat--;
     totalPrice -= 550;
-    // setCounter();
     setTotalPrice();
     setSelectedSeats();
     return;
@@ -124,7 +121,7 @@ function seatSelection(e:any) {
 
   if (IsAddMore()) {
     selectedSeat[idx] = Math.abs(1 - selectedSeat[idx])
-    e.target.style.backgroundColor = 'red';
+    btn.style.backgroundColor = 'red';
     cntOfSeat++;
     totalPrice += 550;
     // setCounter();
@@ -144,6 +141,5 @@ seats.forEach((s) => {
 })
 
 for (let i = 0; i < arr.length; i++)
-  arr[i]?.addEventListener('click', (e) => { seatSelection(e) })
+  arr[i]?.addEventListener('click', () => { seatSelection(arr[i])})
 
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
